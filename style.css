@@ -1,6 +1,19 @@
-.fruitsDisplay {
+.fruits-app {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+}
+
+.fruits-list {
+  list-style: none;
+  padding-left: 0;
+  /* align-items:  */
+}
+
+.fruit-name {
+  text-transform: capitalize;
+}
+
+.search-input {
 }
