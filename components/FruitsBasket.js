@@ -1,6 +1,4 @@
 const FruitsBasket = ({ filteredFruits }) => {
-  console.log(filteredFruits);
-
   return (
     <ul className="fruits-list">
       {filteredFruits.map(fruit => {

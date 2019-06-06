@@ -5,18 +5,41 @@ class App extends React.Component {
       searchField: "",
       fruits: []
     };
+    this.url = `https://my-json-server.typicode.com/thoughtworks-jumpstart/api/fruits`;
   }
 
-  componentDidMount() {
-    fetch(
-      "https://my-json-server.typicode.com/thoughtworks-jumpstart/api/fruits"
-    )
-      .then(res => res.json())
-      .then(result => {
-        this.setState({ fruits: result });
-      });
-    // console.log("componentDidMount: ", this.state.fruits);
+  async componentDidMount() {
+    try {
+      const response = await fetch(this.url);
+
+      if (!response.ok) {
+        throw new Error("Ouch this failed!");
+      }
+
+      const fruits = await response.json();
+      this.setState({ fruits });
+    } catch (err) {
+      console.log(err);
+    }
   }
+
+  // componentDidMount() {
+  //   fetch(this.url)
+  //     .then(response => {
+  //       if (response.ok) {
+  //         return response.json();
+  //       } else {
+  //         throw new Error("Ouch this failed!");
+  //       }
+  //     })
+  //     .then(result => {
+  //       this.setState({ fruits: result });
+  //     })
+  //     // catch will never run, since fetch will only throw an error if the response data is invalid
+  //     .catch(error => {
+  //       console.log("This is an error", error.message);
+  //     });
+  // }
 
   updateField = event => {
     this.setState({ searchField: event.target.value });
@@ -26,13 +49,11 @@ class App extends React.Component {
     // why does fruit.type.includes(searchField) returns true for empty strings?
     const { searchField, fruits } = this.state;
     return fruits.filter(fruit => {
-      return fruit.type.includes(searchField);
+      return fruit.type.includes(searchField.toLowerCase());
     });
   };
 
   render() {
-    // console.log("in render(): ", this.state.fruits);
-
     return (
       <div className="fruits-app">
         <h1>React Fruits Basket</h1>
