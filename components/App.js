@@ -12,7 +12,9 @@ class App extends React.Component {
       "https://my-json-server.typicode.com/thoughtworks-jumpstart/api/fruits"
     )
       .then(res => res.json())
-      .then(result => this.setState({ fruits: result }));
+      .then(result => {
+        this.setState({ fruits: result });
+      });
     // console.log("componentDidMount: ", this.state.fruits);
   }
 
@@ -21,9 +23,9 @@ class App extends React.Component {
   };
 
   filter = () => {
-    // includes reaction to empty string
-    const searchField = this.state.searchField;
-    return this.state.fruits.filter(fruit => {
+    // why does fruit.type.includes(searchField) returns true for empty strings?
+    const { searchField, fruits } = this.state;
+    return fruits.filter(fruit => {
       return fruit.type.includes(searchField);
     });
   };
@@ -32,7 +34,7 @@ class App extends React.Component {
     // console.log("in render(): ", this.state.fruits);
 
     return (
-      <div className="fruitsDisplay">
+      <div className="fruits-app">
         <h1>React Fruits Basket</h1>
         <SearchInput onChange={this.updateField} />
         <FruitsBasket filteredFruits={this.filter()} />
